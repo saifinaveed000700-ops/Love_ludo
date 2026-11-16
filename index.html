@@ -2,182 +2,234 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="only light">
 <title>Saifi ❤️ Zaini Love Ludo</title>
+<link href="https://googleapis.com" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+  :root { color-scheme: only light; }
+  * {
+    box-sizing: border-box; margin: 0; padding: 0; user-select: none;
+    font-family: 'Poppins', sans-serif;
+    forced-color-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
-    background: linear-gradient(135deg, #2b0540, #5e1185, #1d042b);
-    color: white;
+    background: 
+      radial-gradient(circle at 22% 28%, rgba(255, 42, 133, 0.55) 0%, transparent 32%),
+      radial-gradient(circle at 80% 35%, rgba(255, 193, 7, 0.25) 0%, transparent 35%),
+      radial-gradient(circle at 50% 75%, rgba(156, 39, 176, 0.6) 0%, transparent 45%),
+      linear-gradient(180deg, #2b0442 0%, #4c096e 45%, #230338 80%, #12011f 100%) !important;
+    color: #ffffff !important;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 15px;
+    overflow-x: hidden;
+    position: relative;
   }
-  .container { width: 100%; max-width: 420px; text-align: center; }
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-  .pill { background: rgba(255,255,255,0.15); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; }
-  .title { font-size: 36px; font-weight: 900; text-shadow: 0 0 15px #ff2a85; margin: 10px 0 5px; }
-  .subtitle { font-size: 40px; font-weight: 900; color: #ffd54f; text-shadow: 0 3px 8px #000; margin-bottom: 10px; }
-  .ribbon { background: #ff2a85; display: inline-block; padding: 6px 20px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 20px; }
-  .couple-circle {
-    width: 130px; height: 130px; margin: 0 auto 20px; border-radius: 50%;
-    border: 3px solid #ff5ca8; box-shadow: 0 0 25px #ff2a85;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 45px;
-  }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-  .btn-card {
-    padding: 20px 10px; border-radius: 20px; cursor: pointer; border: 2px solid rgba(255,255,255,0.5);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-  }
-  .pink { background: linear-gradient(180deg, #ff4b91, #b80d57); }
-  .purple { background: linear-gradient(180deg, #9c27b0, #4a148c); }
-  .features { background: rgba(0,0,0,0.35); border: 1px solid #ff80ab; border-radius: 18px; padding: 14px; font-size: 12px; }
-  .feat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 10px; font-size: 11px; }
 
-  /* BOARD SCREEN */
-  #board-screen { display: none; }
-  .hud {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 14px; border-radius: 40px; margin: 8px 0;
+  /* Ambient Petals & Bokeh */
+  .petals-layer { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .petal {
+    position: absolute;
+    animation: floatPetal 9s infinite linear;
+    filter: drop-shadow(0 0 6px #ff2a85);
   }
-  .zaini { background: linear-gradient(90deg, #880e4f, #d81b60); border: 2px solid #ff80ab; }
-  .saifi { background: linear-gradient(90deg, #0d47a1, #1976d2); border: 2px solid #64b5f6; }
-  .dice {
-    width: 48px; height: 48px; background: white; color: black; border-radius: 12px;
-    font-size: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;
+  @keyframes floatPetal {
+    0% { transform: translateY(-10vh) rotate(0deg) scale(0.8); opacity: 0; }
+    15% { opacity: 0.9; }
+    85% { opacity: 0.7; }
+    100% { transform: translateY(105vh) rotate(360deg) scale(1.1); opacity: 0; }
   }
-  .board {
+
+  .app {
+    width: 100%; max-width: 440px; min-height: 100vh;
+    padding: 12px 14px; position: relative; z-index: 2;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+
+  /* TOP BAR */
+  .top-nav { display: flex; justify-content: space-between; align-items: center; z-index: 5; }
+  .brand-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: linear-gradient(180deg, rgba(80,15,110,0.85), rgba(40,5,60,0.95)) !important;
+    border: 1.5px solid rgba(255, 180, 230, 0.55);
+    padding: 6px 14px; border-radius: 30px;
+    font-size: 11px; font-weight: 700; line-height: 1.15;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer;
+  }
+  .nav-btns { display: flex; gap: 8px; }
+  .orb-btn {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #8e24aa, #38006b) !important;
+    border: 2px solid rgba(255,255,255,0.75);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: #fff !important; cursor: pointer;
+  }
+  .orb-btn:active { transform: scale(0.92); }
+
+  /* ================= LOBBY VIEW (EXACT IMAGE 1) ================= */
+  #lobby-view { display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+
+  .hero-section {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 4px 0 6px; position: relative;
+  }
+
+  /* Left: Glowing Neon Heart + Couple */
+  .couple-stage {
+    width: 45%; position: relative; display: flex; justify-content: center; align-items: center;
+  }
+  .neon-heart-glow {
+    width: 155px; height: 155px; position: relative;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .couple-illustration {
+    position: relative; z-index: 2; text-align: center; margin-top: 8px;
+  }
+
+  /* Right: Crown + Golden Script Logo + Dice */
+  .logo-stage { width: 55%; text-align: center; position: relative; }
+  .crown-svg { width: 44px; height: 28px; margin: 0 auto -6px; filter: drop-shadow(0 0 8px gold); }
+  .logo-line1 {
+    font-family: 'Great Vibes', cursive; font-size: 31px; color: #ffffff !important;
+    text-shadow: 0 2px 4px #000, 0 0 14px #ff2a85;
+  }
+  .logo-line2 {
+    font-family: 'Great Vibes', cursive; font-size: 46px; line-height: 0.92;
+    color: #ffd54f !important;
+    text-shadow: 0 3px 3px #3e1f00, 0 0 16px #ff9800;
+  }
+  .ribbon-banner {
+    display: inline-block; margin-top: 6px;
+    background: linear-gradient(90deg, #ad1457, #ff176b, #ad1457) !important;
+    border: 1.5px solid #ffe082; border-radius: 20px;
+    padding: 4px 11px; font-size: 9.5px; font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  }
+
+  /* Two 3D Cards (Create Room & Join Room) */
+  .cards-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0 10px;
+  }
+  .room-card {
+    border-radius: 22px; padding: 12px 10px 15px; text-align: center;
+    position: relative; cursor: pointer;
+    border: 2.5px solid rgba(255,255,255,0.85);
+    transition: transform 0.15s;
+  }
+  .room-card:active { transform: scale(0.95); }
+  .card-create {
+    background: linear-gradient(180deg, #ff5c9d 0%, #e91e63 50%, #9c0842 100%) !important;
+    box-shadow: 0 10px 25px rgba(255, 23, 107, 0.7), inset 0 4px 8px rgba(255,255,255,0.5);
+  }
+  .card-join {
+    background: linear-gradient(180deg, #ab47bc 0%, #7b1fa2 50%, #38006b 100%) !important;
+    box-shadow: 0 10px 25px rgba(156, 39, 176, 0.7), inset 0 4px 8px rgba(255,255,255,0.5);
+  }
+  .floating-3d-art {
+    width: 76px; height: 64px; margin: -36px auto 2px;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,0.65));
+  }
+  .card-divider {
+    height: 1px; background: rgba(255,255,255,0.35); margin: 4px 8px 6px;
+  }
+  .rc-title {
+    font-size: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 5px;
+    text-shadow: 0 2px 3px rgba(0,0,0,0.5);
+  }
+  .rc-arrow {
+    background: #ffffff !important; color: #c2185b !important;
+    width: 20px; height: 20px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900;
+  }
+  .rc-sub { font-size: 10.5px; opacity: 0.95; margin-top: 1px; }
+
+  /* Our Love Game Panel */
+  .love-panel {
+    background: linear-gradient(180deg, rgba(60,12,85,0.9), rgba(32,4,50,0.95)) !important;
+    border: 2px solid rgba(255, 110, 185, 0.75);
+    border-radius: 20px; padding: 10px 6px 12px;
+    box-shadow: 0 0 25px rgba(255, 42, 133, 0.4), inset 0 2px 6px rgba(255,255,255,0.2);
+  }
+  .lp-header { text-align: center; font-size: 12.5px; font-weight: 700; margin-bottom: 8px; color: #ffe4f2 !important; }
+  .lp-grid { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; }
+  .lp-item {
+    font-size: 9px; line-height: 1.25; color: #f8bbd0 !important;
+    border-right: 1px solid rgba(255,255,255,0.15); padding: 0 3px;
+  }
+  .lp-item:last-child { border-right: none; }
+  .lp-ico { font-size: 21px; display: block; margin-bottom: 4px; filter: drop-shadow(0 0 6px gold); }
+
+  /* Bottom Good Luck Bar */
+  .luck-footer {
+    margin-top: 10px;
+    background: linear-gradient(90deg, rgba(85,15,115,0.95), rgba(175,20,90,0.95)) !important;
+    border: 1.5px solid rgba(255,150,205,0.7); border-radius: 30px;
+    padding: 7px 14px; font-size: 11.5px; font-weight: 700;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  }
+
+  /* ================= GAME VIEW (EXACT IMAGE 2) ================= */
+  #game-view { display: none; flex-direction: column; justify-content: space-between; flex: 1; }
+  .g-title { text-align: center; margin: -6px 0 2px; }
+  .g-title .logo-line1 { font-size: 25px; }
+  .g-title .logo-line2 { font-size: 31px; }
+
+  .hud-pill {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 12px; border-radius: 50px; margin: 4px 0;
+  }
+  .hud-pink {
+    background: linear-gradient(90deg, #7a0942, #e91e63, #7a0942) !important;
+    border: 2.5px solid #ff80ab; box-shadow: 0 0 22px rgba(255,42,133,0.85);
+  }
+  .hud-blue {
+    background: linear-gradient(90deg, #082d6b, #1e88e5, #082d6b) !important;
+    border: 2.5px solid #90caf9; box-shadow: 0 0 22px rgba(33,150,243,0.85);
+  }
+
+  .av-circle {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid #ffd54f; background: #2c0642 !important;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; position: relative; box-shadow: 0 0 12px gold;
+  }
+  .av-crown { position: absolute; top: -14px; left: -4px; font-size: 18px; transform: rotate(-20deg); }
+  .av-heart { position: absolute; bottom: -2px; right: -4px; font-size: 14px; }
+
+  .hud-info { flex: 1; margin-left: 12px; }
+  .hud-name { font-size: 17px; font-weight: 800; }
+  .hud-badge {
+    display: inline-block; padding: 2px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; background: rgba(0,0,0,0.4) !important;
+  }
+  .active-turn .hud-badge { background: #ff176b !important; box-shadow: 0 0 10px #fff; }
+
+  .dice-cube {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: #ffffff !important; color: #111111 !important;
+    border: 3px solid #ffd54f; box-shadow: 0 5px 12px rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px; font-weight: 900; cursor: pointer;
+  }
+  .dice-spin { animation: spin3d 0.35s ease; }
+  @keyframes spin3d { 0%{transform:rotate(0) scale(1);} 50%{transform:rotate(180deg) scale(1.22);} 100%{transform:rotate(360deg) scale(1);} }
+
+  /* 3D TILTED LUDO BOARD */
+  .board-perspective { perspective: 850px; margin: 2px 0; }
+  .board-frame-3d {
+    transform: rotateX(15deg);
+    background: linear-gradient(180deg, #7b1fa2, #31064a) !important;
+    padding: 7px; border-radius: 18px; border: 2.5px solid #ff80ab;
+    box-shadow: 0 15px 0 #210333, 0 22px 32px rgba(0,0,0,0.85);
+  }
+  .grid-15 {
     display: grid; grid-template-columns: repeat(15, 1fr); grid-template-rows: repeat(15, 1fr);
-    aspect-ratio: 1/1; width: 100%; background: white; border: 4px solid #ff4081; border-radius: 12px; overflow: hidden;
+    aspect-ratio: 1 / 1; width: 100%;
+    background: #ffffff !important; border-radius: 10px; overflow: hidden; border: 2px solid #222;
   }
-  .c { border: 0.5px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; }
-  .r { background: #e53935; } .g { background: #43a047; } .b { background: #1e88e5; } .y { background: #fdd835; }
-  .dot { width: 75%; height: 75%; border-radius: 50%; border: 1.5px solid white; box-shadow: 0 2px 4px #000; }
-</style>
-</head>
-<body>
-<div class="container">
-  <div class="header">
-    <div class="pill" onclick="location.reload()">👑 Saifi ❤️ Zaini</div>
-    <div class="pill">🔊 🎵 ⚙️</div>
-  </div>
-
-  <!-- LOBBY -->
-  <div id="lobby">
-    <div class="title">Saifi ❤️ Zaini</div>
-    <div class="subtitle">Love Ludo</div>
-    <div class="ribbon">Play Together, Stay Connected ❤️</div>
-
-    <div class="couple-circle">
-      <div>🧔🏻🧕🏻</div>
-      <span style="font-size:11px; color:#ffb2d8;">Forever Together</span>
-    </div>
-
-    <div class="grid-2">
-      <div class="btn-card pink" onclick="openBoard()">
-        <div style="font-size:36px;">🏠</div>
-        <h3>Create Room ›</h3>
-        <p style="font-size:11px;">Start a new game</p>
-      </div>
-      <div class="btn-card purple" onclick="openBoard()">
-        <div style="font-size:36px;">👥</div>
-        <h3>Join Room ›</h3>
-        <p style="font-size:11px;">Enter room code</p>
-      </div>
-    </div>
-
-    <div class="features">
-      <b>🤍 Our Love Game 🤍</b>
-      <div class="feat-row">
-        <div>🛡️<br>Private Game</div>
-        <div>⚡<br>Real-Time</div>
-        <div>❤️<br>Romantic</div>
-        <div>⭐<br>Classic Rules</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GAME BOARD -->
-  <div id="board-screen">
-    <div class="hud zaini">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-size:30px;">🧕🏻</span>
-        <div style="text-align:left;"><b>Zaini</b><br><small id="z-stat">🕒 Turn</small></div>
-      </div>
-      <div class="dice" id="d-zaini" onclick="roll('zaini')">⚄</div>
-    </div>
-
-    <div class="board" id="grid"></div>
-
-    <div class="hud saifi">
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-size:30px;">🧔🏻‍♂️</span>
-        <div style="text-align:left;"><b>Saifi</b><br><small id="s-stat">🕒 Waiting...</small></div>
-      </div>
-      <div class="dice" id="d-saifi" onclick="roll('saifi')">⚅</div>
-    </div>
-  </div>
-</div>
-
-<script>
-  let turn = 'zaini';
-  const faces = ['⚀','⚁','⚂','⚃','⚄','⚅'];
-
-  function openBoard() {
-    document.getElementById('lobby').style.display = 'none';
-    document.getElementById('board-screen').style.display = 'block';
-    drawBoard();
-  }
-
-  function drawBoard() {
-    const g = document.getElementById('grid');
-    g.innerHTML = '';
-    const tokens = {
-      r: ['2,2','2,3','3,2','3,3'],
-      g: ['2,11','2,12','3,11','3,12'],
-      b: ['11,2','11,3','12,2','12,3'],
-      y: ['11,11','11,12','12,11','12,12']
-    };
-    const stars = ['6,2','2,6','1,8','6,12','8,13','12,8','13,6','8,1'];
-
-    for (let r = 0; r < 15; r++) {
-      for (let c = 0; c < 15; c++) {
-        const d = document.createElement('div');
-        d.className = 'c';
-        const pos = r + ',' + c;
-
-        if (r < 6 && c < 6) d.className += (r>=1&&r<=4&&c>=1&&c<=4) ? '' : ' r';
-        else if (r < 6 && c > 8) d.className += (r>=1&&r<=4&&c>=10&&c<=13) ? '' : ' g';
-        else if (r > 8 && c < 6) d.className += (r>=10&&r<=13&&c>=1&&c<=4) ? '' : ' b';
-        else if (r > 8 && c > 8) d.className += (r>=10&&r<=13&&c>=10&&c<=13) ? '' : ' y';
-        else if (r >= 6 && r <= 8 && c >= 6 && c <= 8) { d.style.background = '#ff2a85'; if(r===7&&c===7) d.innerHTML='❤️'; }
-        else if ((r===7 && c>=1 && c<=5) || (r===6 && c===1)) d.className += ' r';
-        else if ((c===7 && r>=1 && r<=5) || (r===1 && c===8)) d.className += ' g';
-        else if ((r===7 && c>=9 && c<=13) || (r===8 && c===13)) d.className += ' y';
-        else if ((c===7 && r>=9 && r<=13) || (r===13 && c===6)) d.className += ' b';
-
-        if (tokens.r.includes(pos)) d.innerHTML = '<div class="dot r"></div>';
-        if (tokens.g.includes(pos)) d.innerHTML = '<div class="dot g"></div>';
-        if (tokens.b.includes(pos)) d.innerHTML = '<div class="dot b"></div>';
-        if (tokens.y.includes(pos)) d.innerHTML = '<div class="dot y"></div>';
-        if (stars.includes(pos)) d.innerHTML = '⭐';
-
-        g.appendChild(d);
-      }
-    }
-  }
-
-  function roll(p) {
-    if (p !== turn) return;
-    const num = Math.floor(Math.random() * 6);
-    document.getElementById('d-' + p).innerText = faces[num];
-    if (num !== 5) {
-      turn = turn === 'zaini' ? 'saifi' : 'zaini';
-      document.getElementById('z-stat').innerText = turn === 'zaini' ? '🕒 Turn' : '🕒 Waiting...';
-      document.getElementById('s-stat').innerText = turn === 'saifi' ? '🕒 Turn' : '🕒 Waiting...';
-    }
-  }
-</script>
-</body>
-</html>
+  .cell {
