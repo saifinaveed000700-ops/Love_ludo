@@ -3,113 +3,182 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Saifi ❤️ Zaini Love Ludo</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;min-height:100vh;
- font-family:Arial,sans-serif;
- color:white;text-align:center;
- background:linear-gradient(145deg,#190b36,#54216c,#a33b80);
- display:flex;justify-content:center;align-items:center;
- padding:20px;
+ margin:0;padding:18px;min-height:100vh;
+ font-family:Arial,sans-serif;color:white;text-align:center;
+ background:linear-gradient(145deg,#18082f,#56205f,#a33c80);
 }
-.app{width:100%;max-width:430px}
-.logo{font-size:55px;margin:10px}
-h1{font-size:30px;color:#ffd6ef}
-.subtitle{color:#f6c8e5;font-size:14px}
+.app{max-width:430px;margin:auto}
+h1{color:#ffd5ec;font-size:29px}
+.sub{color:#f8c5e2}
 .card{
- background:rgba(255,255,255,.12);
- border:1px solid rgba(255,255,255,.2);
- border-radius:25px;padding:25px 18px;
- margin-top:25px;
- box-shadow:0 12px 35px #16062266;
+ background:#ffffff18;border:1px solid #ffffff35;
+ border-radius:22px;padding:20px;margin:18px 0;
+ box-shadow:0 8px 25px #17052266
 }
-h2{color:#ffe0f2}
-.btn{
- width:100%;padding:17px;margin:10px 0;
- border:0;border-radius:15px;
- font-size:17px;font-weight:bold;
- color:#542052;background:linear-gradient(90deg,#ffd1e9,#fff0f8);
+button{
+ border:0;border-radius:13px;padding:15px;
+ width:100%;margin:8px 0;
+ background:linear-gradient(90deg,#ffcae5,#e8c8ff);
+ color:#4c1c50;font-size:16px;font-weight:bold;
 }
-.btn.secondary{
- background:linear-gradient(90deg,#f6a5d5,#d6b6ff);
-}
-input{
- width:100%;padding:16px;border-radius:12px;
- border:0;text-align:center;font-size:18px;
- margin:12px 0;
-}
+input{padding:14px;width:100%;border:0;border-radius:12px}
 .hidden{display:none}
-.heart{color:#ff9bcf}
-.footer{margin-top:25px;color:#f7cce7;font-size:13px}
+.board{
+ display:grid;grid-template-columns:repeat(15,1fr);
+ aspect-ratio:1;background:white;gap:1px;
+ border:4px solid white;border-radius:7px;
+ overflow:hidden;margin:15px auto;
+}
+.cell{background:#fff;position:relative}
+.red{background:#f04b60}
+.green{background:#36bb7b}
+.blue{background:#4888ed}
+.yellow{background:#f5c83d}
+.base{display:flex;align-items:center;justify-content:center}
+.base div{
+ width:75%;height:75%;background:#ffffff;
+ border:2px solid #ddd;border-radius:15%;
+ display:grid;grid-template-columns:1fr 1fr;
+ place-items:center
+}
+.dot{width:13px;height:13px;border-radius:50%;background:#aaa}
+.path{background:#eee}
+.center{background:conic-gradient(#36bb7b 0 25%,#f5c83d 0 50%,#4888ed 0 75%,#f04b60 0)}
+.player{padding:12px;border-radius:15px;background:#ffffff18;margin:10px 0}
+.dice{font-size:55px;cursor:pointer}
+small{color:#ffd8ef}
 </style>
 </head>
 <body>
 <div class="app">
- <div class="logo">🌹💕🌹</div>
- <h1>Saifi ❤️ Zaini</h1>
- <div class="subtitle">LOVE LUDO • TOGETHER FOREVER</div>
+<h1>🌹 Saifi ❤️ Zaini 🌹</h1>
+<p class="sub">TOGETHER FOREVER • LOVE LUDO</p>
 
- <div class="card" id="home">
-  <h2>Welcome Lovebirds 💕</h2>
-  <p>Two Hearts, One Game!</p>
-  <button class="btn" onclick="createRoom()">❤️ CREATE ROOM</button>
-  <button class="btn secondary" onclick="showJoin()">💌 JOIN ROOM</button>
-  <p class="heart">🎲 Play Together, Stay Connected</p>
- </div>
-
- <div class="card hidden" id="room">
-  <h2>Your Private Room 🔐</h2>
-  <p>Share this code with your partner</p>
-  <h1 id="roomCode" style="letter-spacing:8px">0000</h1>
-  <button class="btn" onclick="copyCode()">COPY ROOM CODE</button>
-  <button class="btn secondary" onclick="backHome()">BACK</button>
-  <p>Online multiplayer setup will be connected next.</p>
- </div>
-
- <div class="card hidden" id="join">
-  <h2>Join Your Partner 💕</h2>
-  <input id="code" maxlength="4" placeholder="Enter 4 digit code">
-  <button class="btn" onclick="joinRoom()">JOIN ROOM</button>
-  <button class="btn secondary" onclick="backHome()">BACK</button>
- </div>
-
- <div class="footer">Made with ❤️ for Saifi & Zaini</div>
+<div class="card" id="home">
+<h2>💕 Welcome Lovebirds</h2>
+<p>Two Hearts, One Game!</p>
+<button onclick="newRoom()">❤️ CREATE ROOM</button>
+<button onclick="showJoin()">💌 JOIN ROOM</button>
+<p>🔒 Private Game | 🎲 Classic Ludo</p>
 </div>
+
+<div class="card hidden" id="room">
+<h2>Your Room Code</h2>
+<h1 id="roomcode">0000</h1>
+<button onclick="copyRoom()">COPY CODE</button>
+<button onclick="startGame()">OPEN GAME BOARD</button>
+<button onclick="back()">BACK</button>
+<small>Online connection will be added in the next setup.</small>
+</div>
+
+<div class="card hidden" id="join">
+<h2>Join Room 💕</h2>
+<input id="code" placeholder="Enter room code">
+<button onclick="alert('Online connection will be added next!')">JOIN</button>
+<button onclick="back()">BACK</button>
+</div>
+
+<div class="hidden" id="game">
+<div class="player" id="zaini">
+<h2>👩 ZAINI</h2>
+<select id="zc" onchange="changeColor('zaini',this.value)">
+<option value="green">Green</option>
+<option value="red">Red</option>
+<option value="yellow">Yellow</option>
+<option value="blue">Blue</option>
+</select>
+<p>Top Player</p>
+</div>
+
+<div class="board" id="board"></div>
+
+<div class="player" id="saifi">
+<h2>👨 SAIFI</h2>
+<select id="sc" onchange="changeColor('saifi',this.value)">
+<option value="red">Red</option>
+<option value="blue">Blue</option>
+<option value="green">Green</option>
+<option value="yellow">Yellow</option>
+</select>
+<p>Bottom Player</p>
+</div>
+
+<div class="card">
+<h2 id="turn">Zaini's Turn</h2>
+<div class="dice" id="dice">🎲</div>
+<button onclick="roll()">ROLL DICE</button>
+<button onclick="back()">HOME</button>
+</div>
+</div>
+
+<p class="sub">Made with ❤️ for Saifi & Zaini</p>
+</div>
+
 <script>
-function hideAll(){
- document.getElementById('home').classList.add('hidden');
- document.getElementById('room').classList.add('hidden');
- document.getElementById('join').classList.add('hidden');
+function hide(){
+ ['home','room','join','game'].forEach(x=>
+ document.getElementById(x).classList.add('hidden'));
 }
-function createRoom(){
- hideAll();
- document.getElementById('room').classList.remove('hidden');
- document.getElementById('roomCode').textContent=
+function newRoom(){
+ hide();document.getElementById('room').classList.remove('hidden');
+ document.getElementById('roomcode').textContent=
  Math.floor(1000+Math.random()*9000);
 }
-function showJoin(){
- hideAll();
- document.getElementById('join').classList.remove('hidden');
+function showJoin(){hide();document.getElementById('join').classList.remove('hidden')}
+function back(){hide();document.getElementById('home').classList.remove('hidden')}
+function copyRoom(){
+ navigator.clipboard.writeText(document.getElementById('roomcode').textContent)
+ .then(()=>alert('Copied!'));
 }
-function backHome(){
- hideAll();
- document.getElementById('home').classList.remove('hidden');
+function startGame(){
+ hide();document.getElementById('game').classList.remove('hidden');
+ drawBoard();
 }
-function copyCode(){
- let c=document.getElementById('roomCode').textContent;
- navigator.clipboard.writeText(c).then(()=>alert('Room code copied!'));
+function changeColor(id,color){
+ document.getElementById(id).style.border='3px solid '+color;
 }
-function joinRoom(){
- let c=document.getElementById('code').value;
- if(!/^\d{4}$/.test(c)){
- alert('Please enter a valid 4 digit code');
- return;
+function roll(){
+ let n=Math.floor(Math.random()*6)+1;
+ document.getElementById('dice').textContent=
+ ['⚀','⚁','⚂','⚃','⚄','⚅'][n-1];
+ turn=!turn;
+ document.getElementById('turn').textContent=
+ turn?"Saifi's Turn":"Zaini's Turn";
+}
+let turn=false;
+function drawBoard(){
+ let b=document.getElementById('board');
+ b.innerHTML='';
+ for(let r=0;r<15;r++){
+ for(let c=0;c<15;c++){
+ let d=document.createElement('div');
+ d.className='cell';
+ if(r<6&&c<6)d.classList.add('red');
+ else if(r<6&&c>8)d.classList.add('green');
+ else if(r>8&&c<6)d.classList.add('blue');
+ else if(r>8&&c>8)d.classList.add('yellow');
+ else if(r>=6&&r<=8&&c>=6&&c<=8)d.classList.add('center');
+ else if(r>=6&&r<=8||c>=6&&c<=8)d.classList.add('path');
+ if((r===2&&c===2)||(r===2&&c===12)||
+ (r===12&&c===2)||(r===12&&c===12)){
+ d.className+=' base';
+ let box=document.createElement('div');
+ for(let i=0;i<4;i++){
+ let dot=document.createElement('span');
+ dot.className='dot';box.appendChild(dot);
  }
- alert('Online room connection will be added in the next step.');
+ d.appendChild(box);
+ }
+ b.appendChild(d);
+ }
+ }
 }
 </script>
 </body>
 </html>
+
