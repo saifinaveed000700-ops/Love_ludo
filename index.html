@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saifi ❤️ Zaini Love Ludo</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;
+ font-family:Arial,sans-serif;
+ color:white;text-align:center;
+ background:linear-gradient(145deg,#190b36,#54216c,#a33b80);
+ display:flex;justify-content:center;align-items:center;
+ padding:20px;
+}
+.app{width:100%;max-width:430px}
+.logo{font-size:55px;margin:10px}
+h1{font-size:30px;color:#ffd6ef}
+.subtitle{color:#f6c8e5;font-size:14px}
+.card{
+ background:rgba(255,255,255,.12);
+ border:1px solid rgba(255,255,255,.2);
+ border-radius:25px;padding:25px 18px;
+ margin-top:25px;
+ box-shadow:0 12px 35px #16062266;
+}
+h2{color:#ffe0f2}
+.btn{
+ width:100%;padding:17px;margin:10px 0;
+ border:0;border-radius:15px;
+ font-size:17px;font-weight:bold;
+ color:#542052;background:linear-gradient(90deg,#ffd1e9,#fff0f8);
+}
+.btn.secondary{
+ background:linear-gradient(90deg,#f6a5d5,#d6b6ff);
+}
+input{
+ width:100%;padding:16px;border-radius:12px;
+ border:0;text-align:center;font-size:18px;
+ margin:12px 0;
+}
+.hidden{display:none}
+.heart{color:#ff9bcf}
+.footer{margin-top:25px;color:#f7cce7;font-size:13px}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="logo">🌹💕🌹</div>
+ <h1>Saifi ❤️ Zaini</h1>
+ <div class="subtitle">LOVE LUDO • TOGETHER FOREVER</div>
+
+ <div class="card" id="home">
+  <h2>Welcome Lovebirds 💕</h2>
+  <p>Two Hearts, One Game!</p>
+  <button class="btn" onclick="createRoom()">❤️ CREATE ROOM</button>
+  <button class="btn secondary" onclick="showJoin()">💌 JOIN ROOM</button>
+  <p class="heart">🎲 Play Together, Stay Connected</p>
+ </div>
+
+ <div class="card hidden" id="room">
+  <h2>Your Private Room 🔐</h2>
+  <p>Share this code with your partner</p>
+  <h1 id="roomCode" style="letter-spacing:8px">0000</h1>
+  <button class="btn" onclick="copyCode()">COPY ROOM CODE</button>
+  <button class="btn secondary" onclick="backHome()">BACK</button>
+  <p>Online multiplayer setup will be connected next.</p>
+ </div>
+
+ <div class="card hidden" id="join">
+  <h2>Join Your Partner 💕</h2>
+  <input id="code" maxlength="4" placeholder="Enter 4 digit code">
+  <button class="btn" onclick="joinRoom()">JOIN ROOM</button>
+  <button class="btn secondary" onclick="backHome()">BACK</button>
+ </div>
+
+ <div class="footer">Made with ❤️ for Saifi & Zaini</div>
+</div>
+<script>
+function hideAll(){
+ document.getElementById('home').classList.add('hidden');
+ document.getElementById('room').classList.add('hidden');
+ document.getElementById('join').classList.add('hidden');
+}
+function createRoom(){
+ hideAll();
+ document.getElementById('room').classList.remove('hidden');
+ document.getElementById('roomCode').textContent=
+ Math.floor(1000+Math.random()*9000);
+}
+function showJoin(){
+ hideAll();
+ document.getElementById('join').classList.remove('hidden');
+}
+function backHome(){
+ hideAll();
+ document.getElementById('home').classList.remove('hidden');
+}
+function copyCode(){
+ let c=document.getElementById('roomCode').textContent;
+ navigator.clipboard.writeText(c).then(()=>alert('Room code copied!'));
+}
+function joinRoom(){
+ let c=document.getElementById('code').value;
+ if(!/^\d{4}$/.test(c)){
+ alert('Please enter a valid 4 digit code');
+ return;
+ }
+ alert('Online room connection will be added in the next step.');
+}
+</script>
+</body>
+</html>
