@@ -4,181 +4,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Saifi ❤️ Zaini Love Ludo</title>
+<title>Saifi ❤️ Zaini - Love Ludo</title>
 <style>
 *{box-sizing:border-box}
 body{
- margin:0;padding:18px;min-height:100vh;
- font-family:Arial,sans-serif;color:white;text-align:center;
- background:linear-gradient(145deg,#18082f,#56205f,#a33c80);
+ margin:0;min-height:100vh;padding:20px 12px;
+ font-family:Arial,sans-serif;text-align:center;color:white;
+ background:linear-gradient(145deg,#240038,#641477,#bd397f);
 }
-.app{max-width:430px;margin:auto}
-h1{color:#ffd5ec;font-size:29px}
-.sub{color:#f8c5e2}
-.card{
- background:#ffffff18;border:1px solid #ffffff35;
- border-radius:22px;padding:20px;margin:18px 0;
- box-shadow:0 8px 25px #17052266
+h1{font-size:27px;margin:12px 0}
+.subtitle{color:#ffd8ef;margin-bottom:20px}
+.panel{
+ max-width:430px;margin:auto;padding:18px;
+ background:#ffffff17;border:1px solid #ffffff45;
+ border-radius:22px;box-shadow:0 8px 30px #16002066;
 }
 button{
- border:0;border-radius:13px;padding:15px;
- width:100%;margin:8px 0;
- background:linear-gradient(90deg,#ffcae5,#e8c8ff);
- color:#4c1c50;font-size:16px;font-weight:bold;
+ border:0;border-radius:13px;padding:13px 20px;
+ margin:7px;background:#ffb5dc;color:#4b1249;
+ font-size:16px;font-weight:bold;
 }
-input{padding:14px;width:100%;border:0;border-radius:12px}
-.hidden{display:none}
+input{
+ width:90%;padding:14px;border-radius:12px;
+ border:0;margin:10px;text-align:center;font-size:17px;
+}
+.players{display:flex;justify-content:space-around;margin:18px 0}
+.player{padding:12px;border-radius:15px;background:#ffffff20}
+.colors{display:flex;justify-content:center;gap:10px;margin:12px}
+.color{width:30px;height:30px;border-radius:50%;border:3px solid white}
+.red{background:#ed303b}.blue{background:#2789ff}
+.green{background:#27bd70}.yellow{background:#ffdc35}
 .board{
  display:grid;grid-template-columns:repeat(15,1fr);
- aspect-ratio:1;background:white;gap:1px;
- border:4px solid white;border-radius:7px;
- overflow:hidden;margin:15px auto;
+ width:min(94vw,390px);aspect-ratio:1;
+ margin:20px auto;background:white;border:4px solid white;
+ border-radius:5px;overflow:hidden;gap:1px;
 }
-.cell{background:#fff;position:relative}
-.red{background:#f04b60}
-.green{background:#36bb7b}
-.blue{background:#4888ed}
-.yellow{background:#f5c83d}
-.base{display:flex;align-items:center;justify-content:center}
-.base div{
- width:75%;height:75%;background:#ffffff;
- border:2px solid #ddd;border-radius:15%;
- display:grid;grid-template-columns:1fr 1fr;
- place-items:center
-}
-.dot{width:13px;height:13px;border-radius:50%;background:#aaa}
-.path{background:#eee}
-.center{background:conic-gradient(#36bb7b 0 25%,#f5c83d 0 50%,#4888ed 0 75%,#f04b60 0)}
-.player{padding:12px;border-radius:15px;background:#ffffff18;margin:10px 0}
-.dice{font-size:55px;cursor:pointer}
-small{color:#ffd8ef}
+.cell{background:#f6f0f7;display:flex;align-items:center;justify-content:center}
+.r{background:#ed303b}.b{background:#2789ff}
+.g{background:#27bd70}.y{background:#ffdc35}
+.center{background:conic-gradient(#ed303b 0 25%,#2789ff 0 50%,#ffdc35 0 75%,#27bd70 0)}
+.hidden{display:none}
+#status{font-weight:bold;color:#ffe0f2}
 </style>
 </head>
 <body>
-<div class="app">
-<h1>🌹 Saifi ❤️ Zaini 🌹</h1>
-<p class="sub">TOGETHER FOREVER • LOVE LUDO</p>
+<h1>Saifi ❤️ Zaini</h1>
+<div class="subtitle">💕 Our Private Love Ludo 💕</div>
 
-<div class="card" id="home">
-<h2>💕 Welcome Lovebirds</h2>
-<p>Two Hearts, One Game!</p>
-<button onclick="newRoom()">❤️ CREATE ROOM</button>
-<button onclick="showJoin()">💌 JOIN ROOM</button>
-<p>🔒 Private Game | 🎲 Classic Ludo</p>
+<div class="panel" id="home">
+<h2>Welcome to Love Ludo</h2>
+<p>Sirf tum dono ke liye ❤️</p>
+<button onclick="createRoom()">Create Room</button>
+<br>
+<input id="roomInput" placeholder="Enter Room Code">
+<br>
+<button onclick="joinRoom()">Join Room</button>
+<p id="message"></p>
 </div>
 
-<div class="card hidden" id="room">
-<h2>Your Room Code</h2>
-<h1 id="roomcode">0000</h1>
-<button onclick="copyRoom()">COPY CODE</button>
-<button onclick="startGame()">OPEN GAME BOARD</button>
-<button onclick="back()">BACK</button>
-<small>Online connection will be added in the next setup.</small>
+<div class="panel hidden" id="game">
+<div class="players">
+<div class="player">🌸 Zaini<br><span id="zColor">Red</span></div>
+<div class="player">❤️ Saifi<br><span id="sColor">Blue</span></div>
 </div>
-
-<div class="card hidden" id="join">
-<h2>Join Room 💕</h2>
-<input id="code" placeholder="Enter room code">
-<button onclick="alert('Online connection will be added next!')">JOIN</button>
-<button onclick="back()">BACK</button>
+<h3>Choose your colours</h3>
+<div>Saifi</div>
+<div class="colors">
+<button class="color red" onclick="choose('saifi','Red')"></button>
+<button class="color blue" onclick="choose('saifi','Blue')"></button>
+<button class="color green" onclick="choose('saifi','Green')"></button>
+<button class="color yellow" onclick="choose('saifi','Yellow')"></button>
 </div>
-
-<div class="hidden" id="game">
-<div class="player" id="zaini">
-<h2>👩 ZAINI</h2>
-<select id="zc" onchange="changeColor('zaini',this.value)">
-<option value="green">Green</option>
-<option value="red">Red</option>
-<option value="yellow">Yellow</option>
-<option value="blue">Blue</option>
-</select>
-<p>Top Player</p>
+<div>Zaini</div>
+<div class="colors">
+<button class="color red" onclick="choose('zaini','Red')"></button>
+<button class="color blue" onclick="choose('zaini','Blue')"></button>
+<button class="color green" onclick="choose('zaini','Green')"></button>
+<button class="color yellow" onclick="choose('zaini','Yellow')"></button>
 </div>
-
+<h2>🎲 <span id="dice">1</span></h2>
+<button onclick="roll()">Roll Dice 🎲</button>
+<p id="status">Saifi ki baari ❤️</p>
 <div class="board" id="board"></div>
-
-<div class="player" id="saifi">
-<h2>👨 SAIFI</h2>
-<select id="sc" onchange="changeColor('saifi',this.value)">
-<option value="red">Red</option>
-<option value="blue">Blue</option>
-<option value="green">Green</option>
-<option value="yellow">Yellow</option>
-</select>
-<p>Bottom Player</p>
-</div>
-
-<div class="card">
-<h2 id="turn">Zaini's Turn</h2>
-<div class="dice" id="dice">🎲</div>
-<button onclick="roll()">ROLL DICE</button>
-<button onclick="back()">HOME</button>
-</div>
-</div>
-
-<p class="sub">Made with ❤️ for Saifi & Zaini</p>
+<button onclick="location.reload()">Exit Game</button>
 </div>
 
 <script>
-function hide(){
- ['home','room','join','game'].forEach(x=>
- document.getElementById(x).classList.add('hidden'));
+let saifi='Blue',zaini='Red',turn='Saifi';
+function createRoom(){
+ let code=Math.random().toString(36).substring(2,7).toUpperCase();
+ document.getElementById('message').innerText='Room Code: '+code+' (share with Zaini)';
+ document.getElementById('roomInput').value=code;
+ startGame();
 }
-function newRoom(){
- hide();document.getElementById('room').classList.remove('hidden');
- document.getElementById('roomcode').textContent=
- Math.floor(1000+Math.random()*9000);
-}
-function showJoin(){hide();document.getElementById('join').classList.remove('hidden')}
-function back(){hide();document.getElementById('home').classList.remove('hidden')}
-function copyRoom(){
- navigator.clipboard.writeText(document.getElementById('roomcode').textContent)
- .then(()=>alert('Copied!'));
+function joinRoom(){
+ let code=document.getElementById('roomInput').value.trim();
+ if(!code){document.getElementById('message').innerText='Room code likho';return}
+ startGame();
 }
 function startGame(){
- hide();document.getElementById('game').classList.remove('hidden');
- drawBoard();
+ document.getElementById('home').classList.add('hidden');
+ document.getElementById('game').classList.remove('hidden');
+ makeBoard();
 }
-function changeColor(id,color){
- document.getElementById(id).style.border='3px solid '+color;
+function choose(player,color){
+ if(player==='saifi')saifi=color;else zaini=color;
+ document.getElementById('sColor').innerText=saifi;
+ document.getElementById('zColor').innerText=zaini;
 }
 function roll(){
  let n=Math.floor(Math.random()*6)+1;
- document.getElementById('dice').textContent=
- ['⚀','⚁','⚂','⚃','⚄','⚅'][n-1];
- turn=!turn;
- document.getElementById('turn').textContent=
- turn?"Saifi's Turn":"Zaini's Turn";
+ document.getElementById('dice').innerText=n;
+ turn=turn==='Saifi'?'Zaini':'Saifi';
+ document.getElementById('status').innerText=turn+' ki baari ❤️';
 }
-let turn=false;
-function drawBoard(){
+function makeBoard(){
  let b=document.getElementById('board');
- b.innerHTML='';
- for(let r=0;r<15;r++){
- for(let c=0;c<15;c++){
- let d=document.createElement('div');
- d.className='cell';
- if(r<6&&c<6)d.classList.add('red');
- else if(r<6&&c>8)d.classList.add('green');
- else if(r>8&&c<6)d.classList.add('blue');
- else if(r>8&&c>8)d.classList.add('yellow');
- else if(r>=6&&r<=8&&c>=6&&c<=8)d.classList.add('center');
- else if(r>=6&&r<=8||c>=6&&c<=8)d.classList.add('path');
- if((r===2&&c===2)||(r===2&&c===12)||
- (r===12&&c===2)||(r===12&&c===12)){
- d.className+=' base';
- let box=document.createElement('div');
- for(let i=0;i<4;i++){
- let dot=document.createElement('span');
- dot.className='dot';box.appendChild(dot);
- }
- d.appendChild(box);
- }
+ for(let r=0;r<15;r++)for(let c=0;c<15;c++){
+ let d=document.createElement('div');d.className='cell';
+ if(r<6&&c<6)d.classList.add('r');
+ if(r<6&&c>8)d.classList.add('g');
+ if(r>8&&c<6)d.classList.add('b');
+ if(r>8&&c>8)d.classList.add('y');
+ if(r>=6&&r<=8&&c>=6&&c<=8)d.classList.add('center');
  b.appendChild(d);
- }
  }
 }
 </script>
 </body>
 </html>
-
