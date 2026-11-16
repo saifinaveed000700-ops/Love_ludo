@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Saifi ❤️ Zaini — Love Ludo</title>
+<style>
+:root{--pink:#ff168f;--purple:#8500ed;--deep:#100020;--gold:#ffd34e}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:#fff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:
+radial-gradient(ellipse at 50% 40%,#7b087c 0,#31004e 42%,#090018 100%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.34;background:
+radial-gradient(circle at 8% 18%,#ff35d4 0 2px,transparent 4px),
+radial-gradient(circle at 85% 28%,#ff35d4 0 2px,transparent 4px),
+radial-gradient(circle at 22% 78%,#ff35d4 0 2px,transparent 4px),
+radial-gradient(circle at 72% 88%,#ff35d4 0 2px,transparent 4px)}
+button,input,select{font:inherit}button{cursor:pointer;border:0;color:white;font-weight:800}
+.wrap{max-width:980px;margin:auto;padding:14px}
+header{text-align:center;padding:10px 0 18px;position:relative}
+header h1{margin:0;font-size:clamp(32px,7vw,62px);font-family:Georgia,serif;font-style:italic;text-shadow:0 0 10px #ff71e5,0 0 28px #ff16b7}
+header h1 span{color:#ff2b66}
+header .brand{font-family:Georgia,serif;font-style:italic;font-size:clamp(34px,7vw,66px);font-weight:900;color:#ffd34e;text-shadow:0 0 8px #ff8a00,0 3px 0 #9d3900}
+header p{margin:7px;color:#ffe2f4;font-weight:700;letter-spacing:.4px}
+.top-icons{display:flex;justify-content:center;gap:12px;margin:10px 0}
+.top-icons span{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#c900ff,#4b00a9);border:2px solid #ff9cf2;box-shadow:0 0 15px #ff29df;font-size:23px}
+.panel{background:linear-gradient(145deg,#2b0049ee,#17002fee);border:1px solid #dc5cff;border-radius:24px;padding:17px;box-shadow:0 0 22px #b500ff66,inset 0 0 16px #ff43c322;margin:12px 0}
+.lobby-title{text-align:center;color:#ffd9f2;margin:0 0 14px;font-size:22px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.row>*{flex:1;min-width:130px}
+input,select{background:#160027;color:white;border:1px solid #c85aff;border-radius:14px;padding:14px;min-width:0;width:100%;outline:none}
+.btn{background:linear-gradient(135deg,#ff168f,#bd005c);padding:14px 18px;border-radius:18px;box-shadow:0 5px 0 #71003d,0 0 18px #ff20b5;min-height:52px;font-size:17px}
+.btn.alt{background:linear-gradient(135deg,#6900e9,#a000ff);box-shadow:0 5px 0 #3d007c,0 0 18px #a400ff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.small{font-size:13px;color:#e7c8f5}.hidden{display:none!important}
+.lobby-actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.action-card{min-height:175px;border-radius:25px;padding:16px 12px;text-align:center;display:flex;flex-direction:column;justify-content:center;gap:8px;border:2px solid #ffb1ec;box-shadow:0 0 20px #ff2ab8}
+.action-card.create{background:linear-gradient(145deg,#ff318e,#bd003e)}
+.action-card.join{background:linear-gradient(145deg,#a000ff,#4800c6)}
+.action-card .emoji{font-size:46px;filter:drop-shadow(0 4px 4px #0008)}
+.action-card strong{font-size:clamp(19px,4vw,27px)}
+.action-card small{font-size:14px}
+.love-features{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center}
+.love-features div{padding:9px 4px;border-right:1px solid #a64cba}.love-features div:last-child{border:0}
+.love-features b{display:block;font-size:27px}.love-features small{font-size:12px;color:#f7d8ff}
+.color-picks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.color-pick{border:2px solid #ffffff80;border-radius:14px;padding:10px 4px;text-align:center;background:#270044;font-weight:800}
+.color-pick.red{background:#c90029}.color-pick.green{background:#008b38}.color-pick.blue{background:#075bc5}.color-pick.yellow{background:#b98500}
+.color-pick:focus,.color-pick:active{outline:3px solid #fff;box-shadow:0 0 16px #fff}
+#game{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:14px;align-items:start}
+.boardbox{padding:10px;background:linear-gradient(145deg,#ff3ab5,#5200c9);border-radius:26px;box-shadow:0 0 25px #fa00c8,0 8px 22px #0008}
+#board{width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(15,1fr);background:#fff;border:4px solid #fff;border-radius:14px;overflow:hidden;position:relative}
+.cell{border:1px solid #d7cce4;background:#fff;position:relative;display:flex;align-items:center;justify-content:center}
+.cell.path{background:#fff9ff}.cell.safe:after{content:"★";color:#d79b00;font-size:clamp(8px,2vw,17px)}
+.cell.red{background:#ff343f}.cell.blue{background:#2788ff}.cell.green{background:#20c95a}.cell.yellow{background:#ffc928}
+.homebase{position:absolute;width:40%;height:40%;border:5px solid white;border-radius:16px;display:grid;grid-template-columns:1fr 1fr;gap:7%;padding:10%;box-shadow:inset 0 0 12px #0004}
+.homebase.red{top:2%;left:2%;background:#ed1d35}.homebase.green{top:2%;right:2%;background:#08a944}.homebase.blue{bottom:2%;left:2%;background:#0878ec}.homebase.yellow{bottom:2%;right:2%;background:#f6b900}
+.basehole{background:#ffffffd9;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 4px #0005}
+.centertri{position:absolute;left:40%;top:40%;width:20%;height:20%;background:conic-gradient(#f5c400 0 25%,#1687ff 0 50%,#e21e35 0 75%,#1dbb50 0);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);border:2px solid white}
+.token{position:absolute;width:5.2%;height:5.2%;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 5px #0008;z-index:4;display:flex;align-items:center;justify-content:center;font-size:clamp(8px,1.7vw,14px);font-weight:900;color:white;text-shadow:0 1px 2px #000;transform:translate(-50%,-50%);cursor:pointer}
+.token.red{background:radial-gradient(circle at 30% 25%,#ffaaaa,#ef001f 65%)}.token.blue{background:radial-gradient(circle at 30% 25%,#a9e8ff,#0068e9 65%)}
+.token.green{background:radial-gradient(circle at 30% 25%,#b7ffc8,#00a83b 65%)}.token.yellow{background:radial-gradient(circle at 30% 25%,#fff2a8,#e6a900 65%)}
+.token.selectable{outline:4px solid #ffe65a;animation:pulse .8s infinite alternate}
+@keyframes pulse{to{filter:brightness(1.6);transform:translate(-50%,-50%) scale(1.12)}}
+.side{display:grid;gap:10px}.player{border-radius:18px;padding:13px;border:1px solid #d55aff;background:linear-gradient(135deg,#30004e,#18002c)}.player.active{box-shadow:0 0 20px #ff37d1;border:2px solid #ff77d7}
+.player h3{margin:0 0 5px}.status{font-size:13px;color:#ffd6f1}.dice{font-size:52px;text-align:center;line-height:1.3;text-shadow:0 0 16px #ff52cf}
+.info{text-align:center;min-height:42px;color:#ffe4f5}
+#chatlog{height:110px;overflow:auto;background:#140023;border-radius:10px;padding:8px;font-size:13px;margin:8px 0}
+#chatlog div{padding:3px 0;border-bottom:1px solid #ffffff16}
+@media(max-width:720px){#game{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.side .chatpanel{grid-column:1/-1}.wrap{padding:9px}.panel{padding:12px}}
+@media(max-width:480px){.lobby-actions{gap:9px}.action-card{min-height:145px;padding:10px 6px}.love-features small{font-size:10px}.color-picks{gap:5px}.color-pick{font-size:12px;padding:9px 2px}}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+ <div class="top-icons"><span>🔊</span><span>♫</span><span>⚙️</span></div>
+ <h1>Saifi <span>❤️</span> Zaini</h1><div class="brand">Love Ludo 💗</div>
+ <p>Play Together, Stay Connected 💕</p>
+</header>
+<section id="lobby" class="panel">
+ <h2 class="lobby-title">👑 Saifi ❤️ Zaini — Our Love Game</h2>
+ <div class="row"><input id="playerName" maxlength="18" placeholder="Your name" value="Saifi"></div>
+ <p style="text-align:center;margin:12px 0 4px;color:#ffe0f5;font-weight:800">Choose your colour</p>
+ <div class="color-picks">
+  <label class="color-pick red"><input type="radio" name="colourChoice" value="red" checked style="width:auto;accent-color:white"> ❤️ Red</label>
+  <label class="color-pick green"><input type="radio" name="colourChoice" value="green" style="width:auto"> 💚 Green</label>
+  <label class="color-pick blue"><input type="radio" name="colourChoice" value="blue" style="width:auto"> 💙 Blue</label>
+  <label class="color-pick yellow"><input type="radio" name="colourChoice" value="yellow" style="width:auto"> 💛 Yellow</label>
+ </div>
+ <select id="playerColor" aria-label="Selected player colour" style="display:none"><option value="red">Red</option><option value="green">Green</option><option value="blue">Blue</option><option value="yellow">Yellow</option></select>
+ <div class="lobby-actions">
+  <button class="action-card create" id="createBtn"><span class="emoji">🏡</span><strong>Create Room</strong><small>Start a new game</small></button>
+  <button class="action-card join" id="joinBtn"><span class="emoji">👥</span><strong>Join Room</strong><small>Enter room code</small></button>
+ </div>
+ <div class="row"><input id="roomCode" maxlength="8" placeholder="Enter room code to join"></div>
+ <p class="small" style="text-align:center">Private game • Real-time play • Fun & romantic experience</p>
+ <div class="love-features">
+  <div><b>🔒</b><small>Private Game</small></div><div><b>⚡</b><small>Real-Time Play</small></div><div><b>💗</b><small>Love Game</small></div><div><b>⭐</b><small>Classic Ludo</small></div>
+ </div>
+ <p class="small" style="text-align:center;margin-bottom:0">💖 Good Luck, Saifi & Zaini! ❤️</p>
+ <details><summary>Firebase setup / configuration</summary><p class="small">Firebase Web App config is included. Anonymous Authentication and Realtime Database must be enabled.</p></details>
+ <div id="lobbyMsg" class="info"></div>
+</section>
+<section id="game" class="hidden">
+ <div class="boardbox"><div id="board" aria-label="Ludo board">
+  <div class="homebase red"><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i></div>
+  <div class="homebase green"><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i></div>
+  <div class="homebase blue"><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i></div>
+  <div class="homebase yellow"><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i><i class="basehole"></i></div>
+  <div class="centertri"></div>
+ </div></div>
+ <aside class="side">
+  <div class="player" id="redPanel"><h3>❤️ <span id="redName">Red side</span></h3><div class="status" id="redStatus">Available</div></div>
+  <div class="player" id="greenPanel"><h3>💚 <span id="greenName">Green side</span></h3><div class="status" id="greenStatus">Available</div></div>
+  <div class="player" id="yellowPanel"><h3>💛 <span id="yellowName">Yellow side</span></h3><div class="status" id="yellowStatus">Available</div></div>
+  <div class="player" id="bluePanel"><h3>💙 <span id="blueName">Blue side</span></h3><div class="status" id="blueStatus">Available</div></div>
+  <div class="panel" style="margin:0"><div class="dice" id="dice">🎲</div><div class="info" id="gameInfo">Waiting for players…</div><button class="btn" id="rollBtn" style="width:100%">Roll Dice</button><button class="btn alt" id="leaveBtn" style="width:100%;margin-top:9px">Leave Room</button><p class="small" id="roomLabel"></p></div>
+  <div class="panel chatpanel" style="margin:0"><b>💬 Love Chat</b><div id="chatlog"></div><div class="row"><input id="chatInput" placeholder="Write a message…" maxlength="120"><button class="btn" id="sendChat">Send</button></div></div>
+ </aside>
+</section>
+<footer class="small" style="text-align:center;padding:18px">Made with ❤️ for Saifi & Zaini</footer>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+// 1) Replace the values below with your Firebase project's Web App config.
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBU_jZX6rT14Vk6NHpIgb5bZcZsdJkr1qY",
+  authDomain: "saifi-zaini-love-ludo.firebaseapp.com",
+  databaseURL: "https://saifi-zaini-love-ludo-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  projectId: "saifi-zaini-love-ludo",
+  storageBucket: "saifi-zaini-love-ludo.firebasestorage.app",
+  messagingSenderId: "236768794425",
+  appId: "1:236768794425:web:38083d56b96c9d67cefae8"
+};
+const $ = id => document.getElementById(id);
+const track = [[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0]];
+// The board is a two-player head-to-head game: Red starts at track index 0; Blue starts opposite at 26.
+const safe = new Set([0,8,13,21,26,34,39,47]);
+const starts = {red:0, green:13, yellow:26, blue:39};
+const homeLane = {
+ red:[[7,1],[7,2],[7,3],[7,4],[7,5],[7,6]],
+ green:[[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]],
+ yellow:[[7,13],[7,12],[7,11],[7,10],[7,9],[7,8]],
+ blue:[[13,7],[12,7],[11,7],[10,7],[9,7],[8,7]]
+};
+const COLORS = ['red','green','yellow','blue'];
+let app,db,auth,uid,roomRef,roomId,myColor,unsubs=[];
+function firebaseReady(){return FIREBASE_CONFIG.apiKey!=="PASTE_API_KEY" && !!FIREBASE_CONFIG.projectId && !!FIREBASE_CONFIG.appId && !!FIREBASE_CONFIG.databaseURL}
+function msg(t){$('lobbyMsg').textContent=t}
+function randCode(){return Math.random().toString(36).slice(2,7).toUpperCase()}
+function setupFirebase(){
+ if(!firebaseReady()) throw new Error("Pehle FIREBASE_CONFIG mein apni Firebase web config paste karein.");
+ if(!app){app=firebase.initializeApp(FIREBASE_CONFIG);auth=firebase.auth();db=firebase.database()}
+}
+async function signIn(){setupFirebase();const c=await auth.signInAnonymously();uid=c.user.uid}
+function initialState(color,name){
+ const players={red:null,green:null,yellow:null,blue:null}; players[color]={uid,name};
+ return {players,playerOrder:[color],turn:color,dice:0,rolled:false,
+ tokens:{red:[-1,-1,-1,-1],green:[-1,-1,-1,-1],yellow:[-1,-1,-1,-1],blue:[-1,-1,-1,-1]},winner:null,createdAt:Date.now()};
+}
+async function createRoom(){
+ try{msg("Connecting…");await signIn();roomId=randCode();roomRef=db.ref("rooms/"+roomId);myColor=$('playerColor').value;const nm=$('playerName').value.trim()||(myColor==='red'?'Saifi':myColor==='blue'?'Zaini':myColor[0].toUpperCase()+myColor.slice(1));await roomRef.set(initialState(myColor,nm));enterGame()}
+ catch(e){msg(e.message)}
+}
+async function joinRoom(){
+ try{msg("Joining…");await signIn();roomId=$('roomCode').value.trim().toUpperCase();if(!roomId)throw Error("Room code enter karein.");roomRef=db.ref("rooms/"+roomId);const s=(await roomRef.get()).val();if(!s)throw Error("Room nahi mila. Code check karein.");const wanted=$('playerColor').value;
+ if(s.players?.[wanted]&&s.players[wanted].uid!==uid)throw Error(wanted.toUpperCase()+" side already taken hai. Doosri side select karein.");
+ myColor=COLORS.find(c=>s.players?.[c]?.uid===uid)||wanted;
+ if(!s.players?.[myColor]){
+   const nm=$('playerName').value.trim()||(myColor==='red'?'Saifi':myColor==='blue'?'Zaini':myColor[0].toUpperCase()+myColor.slice(1));
+   await roomRef.child('players/'+myColor).set({uid,name:nm});
+   const order=s.playerOrder||Object.keys(s.players||{}).filter(c=>s.players[c]);
+   if(!order.includes(myColor)) await roomRef.child('playerOrder').set([...order,myColor]);
+ }enterGame()}
+ catch(e){msg(e.message)}
+}
+function enterGame(){
+ $('lobby').classList.add('hidden');$('game').classList.remove('hidden');$('roomLabel').textContent="Room code: "+roomId+" (share with your wife)";
+ const stateRef=roomRef;const cb=stateRef.on('value',snap=>{const s=snap.val();if(!s)return;render(s)});unsubs.push(()=>stateRef.off('value',cb));
+ const chatRef=roomRef.child('chat');const chatCb=chatRef.limitToLast(30).on('value',snap=>{const box=$('chatlog');box.innerHTML='';snap.forEach(x=>{const d=document.createElement('div');d.textContent=(x.val().name||'Player')+': '+x.val().text;box.appendChild(d)});box.scrollTop=box.scrollHeight});unsubs.push(()=>chatRef.off('value',chatCb));
+}
+function coordsFor(color,pos){if(pos<0)return null;if(pos>=52)return homeLane[color][Math.min(5,pos-52)];const idx=(pos+starts[color])%52;return track[idx]}
+function render(s){
+ $('redName').textContent=s.players.red?.name||"Red side";
+ $('blueName').textContent=s.players.blue?.name||"Blue side";
+ $('redStatus').textContent=s.players.red?'Connected':'Available';
+ $('blueStatus').textContent=s.players.blue?'Connected':'Available';
+ $('greenName') && ($('greenName').textContent=s.players.green?.name||"Green side");
+ $('yellowName') && ($('yellowName').textContent=s.players.yellow?.name||"Yellow side");
+ COLORS.forEach(c=>{
+  const panel=$(c+'Panel'), name=$(c+'Name'), status=$(c+'Status');
+  if(panel) panel.classList.toggle('active',s.turn===c);
+  if(name) name.textContent=s.players?.[c]?.name||(c[0].toUpperCase()+c.slice(1)+' side');
+  if(status) status.textContent=s.players?.[c]?'Connected':'Available';
+ });
+ $('dice').textContent=s.dice?['⚀','⚁','⚂','⚃','⚄','⚅'][s.dice-1]:'🎲';
+ $('gameInfo').textContent=s.winner?(s.players[s.winner].name+" wins! ❤️"):((s.playerOrder||[]).length<2?"Waiting for second player…":(s.turn===myColor?"Your turn — roll the dice":"Waiting for "+(s.players[s.turn]?.name||s.turn)));
+ $('rollBtn').disabled=!!s.winner||(s.playerOrder||[]).length<2||s.turn!==myColor||s.rolled;
+ drawTokens(s);
+}
+function drawTokens(s){
+ document.querySelectorAll('.token').forEach(x=>x.remove());
+ COLORS.forEach(color=>(s.tokens[color]||[]).forEach((pos,i)=>{
+  let x,y;if(pos<0){const baseStarts={
+ red:[[16.7,16.7],[30,16.7],[16.7,30],[30,30]],
+ green:[[70,16.7],[83.3,16.7],[70,30],[83.3,30]],
+ yellow:[[70,70],[83.3,70],[70,83.3],[83.3,83.3]],
+ blue:[[16.7,70],[30,70],[16.7,83.3],[30,83.3]]
+ };[x,y]=baseStarts[color][i]}else{const c=coordsFor(color,pos);y=(c[0]+.5)*100/15;x=(c[1]+.5)*100/15}
+  const el=document.createElement('button');el.className='token '+color;el.textContent=i+1;el.style.left=x+'%';el.style.top=y+'%';el.title=color+' token '+(i+1);
+  el.onclick=()=>moveToken(i);$('board').appendChild(el);
+ }));
+}
+async function rollDice(){
+ const snap=await roomRef.get(),s=snap.val();if(!s||s.turn!==myColor||s.rolled||s.winner)return;
+ const n=1+Math.floor(Math.random()*6);await roomRef.update({dice:n,rolled:true});
+}
+async function moveToken(i){
+ const snap=await roomRef.get(),s=snap.val();if(!s||s.turn!==myColor||!s.rolled||s.winner)return;
+ const color=myColor,old=s.tokens[color][i],n=s.dice;if(old<0&&n!==6)return;
+ const next=old<0?0:old+n;if(next>57)return;
+ const tokens=JSON.parse(JSON.stringify(s.tokens));tokens[color][i]=next;
+ if(next<52&&!safe.has((next+(color==='red'?0:26))%52)){
+  const opponent=color==='red'?'blue':'red';
+  tokens[opponent]=tokens[opponent].map(p=>p>=0&&p<52&&(p+(opponent==='red'?0:26))%52===(next+(color==='red'?0:26))%52?-1:p);
+ }
+ const won=tokens[color].every(p=>p===57);
+ const extra=n===6||next===57;
+ const update={tokens,rolled:false,dice:0,turn:won?color:(extra?color:((s.playerOrder||[color]).find(c=>c!==color)||color)),winner:won?color:null};
+ await roomRef.update(update);
+}
+async function sendChat(){const text=$('chatInput').value.trim();if(!text||!roomRef)return;const name=roomRef ? (myColor[0].toUpperCase()+myColor.slice(1)) : 'Player';await roomRef.child('chat').push({name,text,at:Date.now()});$('chatInput').value=''}
+async function leave(){unsubs.forEach(f=>f());unsubs=[];$('game').classList.add('hidden');$('lobby').classList.remove('hidden');$('chatlog').innerHTML='';roomRef=null}
+document.querySelectorAll('input[name="colourChoice"]').forEach(r=>r.addEventListener('change',()=>{$('playerColor').value=r.value;}));
+$('createBtn').onclick=createRoom;$('joinBtn').onclick=joinRoom;$('rollBtn').onclick=rollDice;$('sendChat').onclick=send
